@@ -1,7 +1,17 @@
 import initStripe from 'stripe';
 import { supabase } from '../../utils/supabase';
 
+// req.body.record maps to the funtion hook which is triggered on the supabase server !! keep this format !!
+
 async function handler(req, res) {
+  // attach secret key to query parameter in fecth req
+  if (req.query.API_ROUTE_KEY !== process.env.API_ROUTE_KEY) {
+    return res.status(401).send('Unauthorized - No API_ROUTE_KEY found!');
+  }
+
+  // check if records are present in request body in record
+  if (!req.body.record) return res.status(400).send('No record found!');
+
   const stripe = initStripe(process.env.STRIPE_SECRET_KEY);
 
   const customer = await stripe.customers.create({

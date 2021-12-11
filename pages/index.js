@@ -1,10 +1,14 @@
 import Head from 'next/head';
 import Link from 'next/link';
 
+import { useUser } from 'context/user';
+
 import { supabase } from 'utils/supabase';
 
 export default function Home({ lessons }) {
-  console.log(supabase.auth.user());
+  // console.log(supabase.auth.user());
+  const { user } = useUser();
+  console.log(user);
 
   return (
     <div className="grid place-content-center my-10 w-screen">
