@@ -11,7 +11,7 @@ function Logout() {
     };
     logout();
   }, []);
-  return <div>Logout</div>;
+  return <div>Logout...</div>;
 }
 
 export default Logout;

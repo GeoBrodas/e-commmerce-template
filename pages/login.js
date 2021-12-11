@@ -8,7 +8,7 @@ function LoginPage() {
     });
   }, []);
 
-  return <div></div>;
+  return <div>Loggin ....</div>;
 }
 
 export default LoginPage;
