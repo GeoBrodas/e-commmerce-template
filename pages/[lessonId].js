@@ -1,10 +1,29 @@
 import { supabase } from 'utils/supabase';
 
 import Head from 'next/head';
+import { useEffect, useState } from 'react';
+
+import Video from 'react-player';
 
 function SingleLesson({ lessons }) {
+  const [videoUrl, setVideoUrl] = useState();
+
+  const getVideoUrl = async () => {
+    const { data } = await supabase
+      .from('premium_content')
+      .select('video_url')
+      .eq('id', lessons.id)
+      .single();
+
+    setVideoUrl(data?.video_url);
+  };
+
+  useEffect(() => {
+    getVideoUrl();
+  }, []);
+
   return (
-    <div className="my-10 mx-5 w-auto">
+    <div className="my-10 px-14 lg:px-64 w-auto">
       <Head>
         <title>{lessons.title}</title>
         <meta name="description" content={lessons.description} />
@@ -12,6 +31,7 @@ function SingleLesson({ lessons }) {
 
       <h1 className="text-4xl font-bold">{lessons.title}</h1>
       <p className="my-5">{lessons.description}</p>
+      {videoUrl && <Video url={videoUrl} width="100%" controls={true} />}
     </div>
   );
 }
