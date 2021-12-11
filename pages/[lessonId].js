@@ -1,11 +1,17 @@
 import { supabase } from 'utils/supabase';
 
+import Head from 'next/head';
+
 function SingleLesson({ lessons }) {
-  console.log(lessons);
   return (
-    <div>
-      <h1>{lessons.title}</h1>
-      <p>{lessons.description}</p>
+    <div className="my-10 mx-5 w-auto">
+      <Head>
+        <title>{lessons.title}</title>
+        <meta name="description" content={lessons.description} />
+      </Head>
+
+      <h1 className="text-4xl font-bold">{lessons.title}</h1>
+      <p className="my-5">{lessons.description}</p>
     </div>
   );
 }
