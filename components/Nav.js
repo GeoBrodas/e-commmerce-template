@@ -17,6 +17,11 @@ function Nav() {
             <a>Pricing</a>
           </Link>
         </li>
+        {/* {user && (
+          <li className="ml-7 text-gray-500">
+            Welcome {user?.user_metadata.full_name}!
+          </li>
+        )} */}
         <li className="ml-auto">
           <Link href={`/${user ? 'logout' : 'login'}`}>
             <a suppressHydrationWarning>{user ? 'Logout' : 'Login'}</a>

@@ -1,4 +1,7 @@
 import initStripe from 'stripe';
+import { loadStripe } from '@stripe/stripe-js';
+import axios from 'axios';
+
 import { useUser } from 'context/user';
 
 import Head from 'next/head';
@@ -9,6 +12,14 @@ function PricingPage({ plans }) {
   const showSubscribeButton = !!user && !user.is_subscribed;
   const showCreateAccountButton = !user;
   const showManageSubscriptionsButton = !!user && user.is_subscribed;
+
+  const processSubscription = (planId) => async () => {
+    const { data } = await axios.get(`/api/subscription/${planId}`);
+
+    // load stripe js script to process checkout
+    const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY);
+    await stripe.redirectToCheckout({ sessionId: data.id });
+  };
 
   return (
     <div className="m-10">
@@ -35,7 +46,10 @@ function PricingPage({ plans }) {
             {!isLoading && (
               <div>
                 {showSubscribeButton && (
-                  <button className="bg-orange-300 rounded-md p-2 mt-2">
+                  <button
+                    onClick={processSubscription(plan.id)}
+                    className="bg-orange-300 rounded-md p-2 mt-2"
+                  >
                     Subscribe!
                   </button>
                 )}
