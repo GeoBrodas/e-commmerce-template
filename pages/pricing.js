@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useUser } from 'context/user';
 
 import Head from 'next/head';
+import Link from 'next/link';
 
 function PricingPage({ plans }) {
   const { user, login, isLoading } = useUser();
@@ -31,14 +32,14 @@ function PricingPage({ plans }) {
       <h2 className="text-center text-3xl font-bold underline decoration-orange-300 mb-10">
         Subscription plans
       </h2>
-      <div className="flex flex-col md:flex-row items-center md:space-x-5 space-y-5 md:space-y-0 justify-center">
+      <div className="flex flex-col md:flex-row items-center md:space-x-10 space-y-5 md:space-y-0 justify-center">
         {plans.map((plan) => (
           <div
-            className="rounded-md border-slate-200 border-2 shadow-md w-2/6 md:w-1/6 pl-2 py-5 px-2"
+            className="rounded-md border-slate-200 border-2 shadow-md w-1/6 md:w-2/6 pl-2 py-5 px-2"
             key={plan.id}
           >
             <h2 className="font-semibold text-xl">{plan.name}</h2>
-            <p className="text-gray-500">
+            <p className="text-gray-500 mb-2">
               {plan.currency.toUpperCase()} {plan.price / 100} / {plan.interval}
             </p>
 
@@ -62,9 +63,11 @@ function PricingPage({ plans }) {
                   </button>
                 )}
                 {showManageSubscriptionsButton && (
-                  <button className="bg-orange-300 rounded-md p-2 mt-2">
-                    Manage Subscription!
-                  </button>
+                  <Link href="/dashboard">
+                    <a className="bg-orange-300 text-sm md:text-base whitespace-nowrap rounded-md p-2">
+                      Manage Subscription!
+                    </a>
+                  </Link>
                 )}
               </div>
             )}

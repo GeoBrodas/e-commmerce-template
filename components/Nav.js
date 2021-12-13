@@ -12,7 +12,12 @@ function Nav() {
             <a>Home</a>
           </Link>
         </li>
-        <li className="ml-5">
+        {!!user && (
+          <Link href="/dashboard">
+            <a className="ml-2">Dashboard</a>
+          </Link>
+        )}
+        <li className="ml-2">
           <Link href="/pricing">
             <a>Pricing</a>
           </Link>
